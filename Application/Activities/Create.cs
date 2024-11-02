@@ -19,6 +19,7 @@ namespace Application.Activities
         {
             private readonly DataContext context;
 
+
             public Handler(DataContext context)
             {
                 this.context = context;

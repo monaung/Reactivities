@@ -1,32 +1,29 @@
-import { Grid } from "semantic-ui-react";
-import ActivityList from "./ActivityList";
-import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import LoadingComponent from "../../../app/layout/loadingComponent";
+import { Grid } from "semantic-ui-react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useStore } from "../../../app/stores/store";
+import ActivityFilters from "./ActivityFilters";
+import ActivityList from './ActivityList';
 
-
-export default observer(function ActivityDashboard() /* destructure the properties */ {
-
+export default observer(function ActivityDashboard() {
     const { activityStore } = useStore();
-    const {loadActivities, activityRegister} = activityStore;
+    const { loadActivities, activityRegistry } = activityStore;
 
     useEffect(() => {
-        if(activityRegister.size <=1) loadActivities();
-    }, [loadActivities])
+        if (activityRegistry.size <= 1) loadActivities();
+    }, [loadActivities, activityRegistry.size])
 
-    if (activityStore.loadingInitial) return <LoadingComponent content="Loading app..." />
+    if (activityStore.loadingInitial) return <LoadingComponent content='Loading app...' />
+
     return (
-
         <Grid>
-            <Grid.Column width={10}>
+            <Grid.Column width='10'>
                 <ActivityList />
             </Grid.Column>
-            <Grid.Column widescreen={6}>
-                <h2>Activity Filter</h2>
+            <Grid.Column width='6'>
+                <ActivityFilters />
             </Grid.Column>
-
         </Grid>
-
     )
 })
